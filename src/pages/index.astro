@@ -1,238 +1,29 @@
 ---
 import { siteConfig } from '../config/site';
 import '../styles/global.css';
-
-const approach = [
-  'Evaluamos',
-  'Orientamos',
-  'Priorizamos',
-  'Acompañamos'
-];
+const approach = ['Evaluamos', 'Orientamos', 'Priorizamos', 'Acompañamos'];
+const solutionIcons = ['shield', 'ai', 'print', 'training'];
 ---
-
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="CERO27 ayuda a las PYMES a comprender sus riesgos, establecer prioridades y avanzar en la gestión de seguridad e inteligencia artificial desde una perspectiva clara, práctica y orientada al negocio."
-    />
-    <link rel="canonical" href={`${siteConfig.siteUrl}/`} />
-    <meta property="og:title" content={`${siteConfig.name} — ${siteConfig.slogan}`} />
-    <meta
-      property="og:description"
-      content="CERO27 ayuda a las PYMES a comprender sus riesgos, establecer prioridades y avanzar en la gestión de seguridad e inteligencia artificial."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={`${siteConfig.siteUrl}/`} />
-    <title>{siteConfig.name} — {siteConfig.slogan}</title>
-  </head>
-
-  <body>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
-
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="/" aria-label="CERO27 — Inicio">
-          <img
-            src="/assets/CERO27-Logo-Original.png"
-            alt="CERO27 — Seguridad que te permite avanzar"
-            width="420"
-            height="229"
-          />
-        </a>
-
-        <nav class="primary-nav" aria-label="Navegación principal">
-          {siteConfig.navigation.map((item) => (
-            item.available ? (
-              <a href={item.href} aria-current="page">{item.label}</a>
-            ) : (
-              <span class="nav-pending">{item.label}</span>
-            )
-          ))}
-        </nav>
-
-        <a
-          class="button button-primary header-cta"
-          href={siteConfig.diagnosticUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Conocer mi nivel de riesgo <span aria-hidden="true">→</span>
-        </a>
-
-        <button
-          class="mobile-menu"
-          type="button"
-          aria-label="Abrir menú"
-          aria-expanded="false"
-          aria-controls="primary-navigation"
-        >
-          Menú
-        </button>
-      </div>
-
-      <nav id="primary-navigation" class="mobile-nav" aria-label="Navegación móvil" hidden>
-        {siteConfig.navigation.map((item) => (
-          item.available ? (
-            <a href={item.href} aria-current="page">{item.label}</a>
-          ) : (
-            <span class="nav-pending">{item.label}</span>
-          )
-        ))}
-      </nav>
-    </header>
-
-    <main id="contenido">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="container hero-grid">
-          <div class="hero-copy-block">
-            <p class="eyebrow">CERO27</p>
-            <h1 id="hero-title">Seguridad que te permite <span>avanzar</span></h1>
-            <p class="hero-copy">
-              CERO27 ayuda a las PYMES a comprender sus riesgos, establecer prioridades y avanzar en la gestión de seguridad e inteligencia artificial desde una perspectiva clara, práctica y orientada al negocio.
-            </p>
-            <div class="hero-actions">
-              <a
-                class="button button-primary button-large"
-                href={siteConfig.diagnosticUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Conocer mi nivel de riesgo <span aria-hidden="true">→</span>
-              </a>
-              <span class="button-link disabled-link" aria-disabled="true">Conversemos <span aria-hidden="true">→</span></span>
-            </div>
-          </div>
-
-          <div
-            class="hero-photo-slot"
-            aria-hidden="true"
-            data-photo-slot="original-hero-photography"
-          ></div>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="solutions-title">
-        <div class="container">
-          <header class="section-header">
-            <p class="section-kicker">Soluciones</p>
-            <h2 id="solutions-title">Soluciones</h2>
-          </header>
-
-          <div class="solutions-grid">
-            {siteConfig.solutions.map((solution, index) => (
-              <article class="solution-card">
-                <span class="solution-index">0{index + 1}</span>
-                <h3>{solution.label}</h3>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section class="section approach" aria-labelledby="approach-title">
-        <div class="container">
-          <header class="section-header">
-            <p class="section-kicker">Nuestro enfoque</p>
-            <h2 id="approach-title">Nuestro enfoque</h2>
-          </header>
-
-          <ol class="approach-grid">
-            {approach.map((step, index) => (
-              <li class="approach-step">
-                <span class="approach-number">0{index + 1}</span>
-                <h3>{step}</h3>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section class="section resources" aria-labelledby="resources-title">
-        <div class="container">
-          <div class="resources-panel">
-            <p class="section-kicker">Recursos</p>
-            <h2 id="resources-title">Recursos</h2>
-            <p>Conocimiento para comprender mejor los riesgos y orientar tus decisiones.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section cta-final" aria-labelledby="final-cta-title">
-        <div class="container cta-final-inner">
-          <div>
-            <p class="section-kicker">Siguiente paso</p>
-            <h2 id="final-cta-title">Conocer mi nivel de riesgo</h2>
-          </div>
-          <div class="cta-actions">
-            <a
-              class="button button-primary button-large"
-              href={siteConfig.diagnosticUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Conocer mi nivel de riesgo <span aria-hidden="true">→</span>
-            </a>
-            <span class="button-link disabled-link" aria-disabled="true">Conversemos <span aria-hidden="true">→</span></span>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <div>
-          <strong>CERO27</strong>
-          <p>{siteConfig.slogan}</p>
-        </div>
-
-        <div>
-          <h2>Soluciones</h2>
-          <ul>
-            {siteConfig.solutions.map((solution) => (
-              <li><span>{solution.label}</span></li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2>Navegación</h2>
-          <ul>
-            {siteConfig.navigation.filter((item) => item.label !== 'Inicio').map((item) => (
-              <li>
-                {item.available ? (
-                  <a href={item.href}>{item.label}</a>
-                ) : (
-                  <span class="nav-pending">{item.label}</span>
-                )}
-              </li>
-            ))}
-          </ul>
-          <p>{siteConfig.email}<br />{siteConfig.location}</p>
-          <p><span>Política de privacidad</span></p>
-        </div>
-      </div>
-
-      <div class="container footer-bottom">
-        <span>CERO27</span>
-        <span>{siteConfig.slogan}</span>
-      </div>
-    </footer>
-
-    <script>
-      const menuButton = document.querySelector('.mobile-menu');
-      const mobileNavigation = document.querySelector('#primary-navigation');
-
-      menuButton?.addEventListener('click', () => {
-        if (!mobileNavigation) return;
-        const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-        menuButton.setAttribute('aria-expanded', String(!isOpen));
-        menuButton.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
-        mobileNavigation.hidden = isOpen;
-      });
-    </script>
-  </body>
-</html>
+<!doctype html><html lang="es"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="CERO27 ayuda a las PYMES a comprender sus riesgos, establecer prioridades y avanzar en seguridad de la información e inteligencia artificial desde una perspectiva clara y práctica." />
+<link rel="canonical" href={`${siteConfig.siteUrl}/`} /><meta property="og:title" content={`${siteConfig.name} — ${siteConfig.slogan}`} /><meta property="og:description" content="Seguridad, IA y gobernanza, Print Management y capacitación para PYMES." /><meta property="og:type" content="website" /><meta property="og:url" content={`${siteConfig.siteUrl}/`} /><title>{siteConfig.name} — {siteConfig.slogan}</title>
+</head><body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header"><div class="container header-inner">
+<a class="brand" href="/" aria-label="CERO27 — Inicio"><img src="/assets/CERO27-Logo-Original.png" alt="CERO27 — Seguridad que te permite avanzar" /></a>
+<nav class="primary-nav" aria-label="Navegación principal">{siteConfig.navigation.map((item)=><a href={item.href} class={item.label==='Inicio'?'active':''}>{item.label}</a>)}</nav>
+<a class="button button-primary header-cta" href="#conversemos">Conversemos <span>→</span></a>
+<button class="mobile-menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="primary-navigation">Menú</button></div>
+<nav id="primary-navigation" class="mobile-nav" aria-label="Navegación móvil" hidden>{siteConfig.navigation.map((item)=><a href={item.href}>{item.label}</a>)}<a class="mobile-diagnostic" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo →</a></nav></header>
+<main id="contenido">
+<section class="hero" aria-labelledby="hero-title"><div class="hero-photo" aria-hidden="true"></div><div class="hero-overlay" aria-hidden="true"></div><div class="container hero-inner"><div class="hero-copy-block"><p class="eyebrow">CERO27</p><h1 id="hero-title">Seguridad<br />que te permite<br /><span>avanzar</span></h1><p class="hero-copy">Ayudamos a las PYMES a entender sus riesgos, priorizar lo importante y mejorar su seguridad sin complicar su negocio.</p><div class="hero-actions"><a class="button button-primary button-large" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo <span>→</span></a><a class="button-link" href="#conversemos">Conversemos <span>→</span></a></div></div></div>
+<div class="container solution-strip" aria-label="Soluciones principales">{siteConfig.solutions.map((solution,index)=><a class="solution-item" href={solution.href}><span class={`solution-icon ${solutionIcons[index]}`} aria-hidden="true"></span><span>{solution.label}</span><i></i></a>)}</div></section>
+<section class="section solutions-section" id="soluciones" aria-labelledby="solutions-title"><div class="container"><p class="section-kicker">Soluciones</p><h2 id="solutions-title">Claridad para decidir.<br /><span>Seguridad para avanzar.</span></h2><div class="solutions-grid">{siteConfig.solutions.map((solution,index)=><article class="solution-card"><span class="solution-index">0{index+1}</span><h3>{solution.label}</h3><a href={solution.href}>Conocer solución <span>→</span></a></article>)}</div></div></section>
+<section class="section approach" id="nosotros" aria-labelledby="approach-title"><div class="container"><p class="section-kicker">Nuestro enfoque</p><h2 id="approach-title">Evaluamos. Orientamos.<br /><span>Priorizamos. Acompañamos.</span></h2><ol class="approach-grid">{approach.map((step,index)=><li class="approach-step"><span>0{index+1}</span><h3>{step}</h3></li>)}</ol></div></section>
+<section class="section resources" id="recursos" aria-labelledby="resources-title"><div class="container resources-inner"><div><p class="section-kicker">Recursos</p><h2 id="resources-title">Decisiones mejor informadas.</h2></div><p>Contenido práctico para comprender riesgos, ordenar prioridades y avanzar con mayor criterio.</p></div></section>
+<section class="section final-cta" id="conversemos" aria-labelledby="final-title"><div class="container final-cta-inner"><div><p class="section-kicker">Siguiente paso</p><h2 id="final-title">Conocer mi nivel de riesgo</h2><p>Una primera mirada para saber dónde estás y qué conviene priorizar.</p></div><a class="button button-primary button-large" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo <span>→</span></a></div></section>
+</main>
+<footer class="site-footer"><div class="container footer-grid"><div class="footer-brand"><img src="/assets/CERO27-Logo-Original.png" alt="CERO27" /><p>{siteConfig.slogan}</p></div><div><h2>Soluciones</h2><ul>{siteConfig.solutions.map((solution)=><li><a href={solution.href}>{solution.label}</a></li>)}</ul></div><div><h2>Navegación</h2><ul>{siteConfig.navigation.map((item)=><li><a href={item.href}>{item.label}</a></li>)}</ul></div></div><div class="container footer-bottom"><span>CERO27</span><span>{siteConfig.location} · {siteConfig.email}</span></div></footer>
+<script>const menuButton=document.querySelector('.mobile-menu');const mobileNavigation=document.querySelector('#primary-navigation');menuButton?.addEventListener('click',()=>{if(!mobileNavigation)return;const open=menuButton.getAttribute('aria-expanded')==='true';menuButton.setAttribute('aria-expanded',String(!open));menuButton.setAttribute('aria-label',open?'Abrir menú':'Cerrar menú');mobileNavigation.hidden=open;});</script>
+</body></html>
