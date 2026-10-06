@@ -1,0 +1,15 @@
+CERO27 Inicio v4 — comprobación interna
+
+no_phva: OK
+no_internal_states: OK
+no_landing_public_asset: OK
+no_landing_public_reference: OK
+no_substitute_photo: OK
+methodology_only: OK
+four_solutions: OK
+no_excluded_categories: OK
+diagnostic_url: OK
+diagnostic_new_tab: OK
+conversemos: OK
+
+Este archivo es interno y no se publica como contenido del sitio.

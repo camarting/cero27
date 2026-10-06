@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cero27.co/sitemap.xml

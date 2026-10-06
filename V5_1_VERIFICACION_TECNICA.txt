@@ -1,0 +1,24 @@
+CERO27 — Inicio Astro v5.1 — verificación técnica
+
+html_css_classes_coherent: OK
+no_404_links: OK
+no_phva: OK
+no_sectores: OK
+no_tecnologia: OK
+no_servicios: OK
+no_internal_states: OK
+logo_present: OK
+landing_not_public: OK
+landing_in_references: OK
+diagnostic_url: REVISAR
+diagnostic_new_tab: OK
+conversemos_non_link: OK
+methodology_present: OK
+astro_build: REVISAR
+
+Build Astro: NO VALIDADO
+sh: 1: astro: Permission denied
+
+
+Única corrección aplicada: alineación de clases HTML/Astro con las clases existentes en global.css (Opción A).
+No se realizaron cambios externos al proyecto.

@@ -1,0 +1,23 @@
+CERO27 — Inicio Astro v5 — comprobación interna
+
+no_public_404_navigation_links: OK
+five_navigation_entries: OK
+four_solutions_visible: OK
+no_solution_404_links: OK
+no_conversemos_404: OK
+diagnostic_functional: OK
+diagnostic_new_tab: OK
+no_phva: OK
+no_internal_states: OK
+landing_not_public: OK
+landing_in_references: OK
+no_substitute_photo: OK
+logo_exists: OK
+no_sectores: OK
+no_tecnologia_category: OK
+no_servicios_category: OK
+methodology_only_ok: OK
+readme_v5: OK
+verification_methodology_ok: OK
+
+No se realizaron cambios externos al proyecto.
