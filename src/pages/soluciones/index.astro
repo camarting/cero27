@@ -1,0 +1,7 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { siteConfig } from '../../config/site';
+---
+<PageLayout title="Soluciones" description="Soluciones de CERO27 para que las PYMES comprendan sus riesgos y establezcan prioridades." active="Soluciones">
+<main id="contenido" class="page-main"><section class="page-hero container"><p class="section-kicker">Soluciones</p><h1>Claridad para decidir.<br /><span>Seguridad para avanzar.</span></h1><p>CERO27 ayuda a las PYMES a comprender sus riesgos, establecer prioridades y avanzar en la gestión de seguridad e inteligencia artificial con un enfoque claro y práctico.</p></section><section class="page-content container"><div class="page-link-grid">{siteConfig.solutions.map((s,i)=><a class="page-link-card" href={s.href}><span class="solution-index">0{i+1}</span><h2>{s.label}</h2><span>Conocer solución →</span></a>)}</div></section></main>
+</PageLayout>

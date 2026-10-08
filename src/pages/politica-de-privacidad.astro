@@ -1,0 +1,37 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { siteConfig } from '../config/site';
+---
+<PageLayout title="Política de privacidad" description="Borrador de la política de privacidad de CERO27; datos jurídicos pendientes de validación.">
+  <main id="contenido" class="page-main">
+    <section class="page-hero container">
+      <p class="section-kicker">Privacidad</p>
+      <h1>Política de privacidad</h1>
+      <p class="pending-note">BORRADOR — DATOS JURÍDICOS PENDIENTES DE VALIDACIÓN</p>
+      <p>Esta página es un borrador de trabajo. No constituye una política de privacidad definitiva ni debe presentarse como tal hasta completar y validar la información pendiente con asesoría jurídica.</p>
+    </section>
+
+    <section class="page-content container" aria-label="Información pendiente de validación">
+      <h2>Información por completar</h2>
+      <p>Los puntos siguientes requieren confirmación documental y revisión jurídica antes de aprobar una versión final:</p>
+      <ul>
+        <li>Identificación y datos legales completos de la persona o entidad responsable del tratamiento.</li>
+        <li>Finalidades y bases jurídicas aplicables a cada tratamiento de datos personales.</li>
+        <li>Categorías de datos y de personas titulares cuyos datos se tratarían.</li>
+        <li>Destinatarios, encargados, proveedores y posibles transferencias de datos.</li>
+        <li>Plazos o criterios de conservación y medidas aplicables al tratamiento.</li>
+        <li>Procedimiento y canal para consultas, solicitudes y ejercicio de derechos.</li>
+        <li>Fecha de entrada en vigor, versión y aprobación de la política definitiva.</li>
+      </ul>
+
+      <h2>Contacto publicado</h2>
+      <p>Los datos de contacto visibles en el sitio son los siguientes; su función y suficiencia para asuntos de privacidad deben validarse antes de aprobar la política:</p>
+      <p><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />{siteConfig.location}</p>
+
+      <h2>Estado de formularios</h2>
+      <p>En esta versión, el formulario de contacto está deshabilitado. El contenido aprobado indica que sus datos no se envían ni almacenan hasta que se configure su procesamiento.</p>
+
+      <p class="pending-note">No se han completado aquí términos jurídicos ni se afirma una práctica de tratamiento no confirmada. La publicación definitiva queda pendiente de validación.</p>
+    </section>
+  </main>
+</PageLayout>
