@@ -4,7 +4,7 @@ const { active = '' } = Astro.props;
 ---
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 <header class="site-header"><div class="container header-inner">
-  <a class="brand" href="/" aria-label="CERO27 — Inicio"><img src="/assets/CERO27-Logo-Original.png" alt="CERO27 — Seguridad que te permite avanzar" /></a>
+  <a class="brand" href="/" aria-label="CERO27 — Inicio"><img src="/assets/CERO27-logo-horizontal.svg" alt="CERO27 — Seguridad que te permite avanzar" /></a>
   <nav class="primary-nav" aria-label="Navegación principal">{siteConfig.navigation.map((item)=><a href={item.href} class={item.label===active?'active':''}>{item.label}</a>)}</nav>
   <a class="button button-primary header-cta" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo <span>→</span></a>
   <button class="mobile-menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="primary-navigation">Menú</button>
