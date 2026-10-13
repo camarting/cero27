@@ -116,3 +116,12 @@
 /* v14: contraste AA en botones naranjas (texto grande en negrita ≥ 18,66px) */
 .button-primary{font-size:1.1875rem}
 .header-cta{font-size:1.1875rem}
+/* v12: política de datos */
+.legal-body>*{max-width:860px}
+.legal-body h2{font-size:clamp(1.5rem,2.4vw,2rem);letter-spacing:-.02em;margin:3rem 0 1rem}
+.legal-body h3{font-size:1.15rem;margin:1.8rem 0 .6rem}
+.legal-body p,.legal-body li{color:var(--muted);line-height:1.7}
+.legal-body li{margin:.35rem 0}
+.legal-body strong{color:#fff}
+.legal-data{list-style:none;padding:0;border-top:1px solid var(--line)}
+.legal-data li{padding:.7rem 0;border-bottom:1px solid var(--line);margin:0}
