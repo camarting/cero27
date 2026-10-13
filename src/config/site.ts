@@ -4,6 +4,7 @@ export const siteConfig = {
   siteUrl: 'https://cero27.co',
   diagnosticUrl: 'https://diagn-stico-iso-iec-27001.ai.studio/',
   email: 'info@cero27.co',
+  whatsappUrl: 'https://wa.me/573168659331?text=Hola%20CERO27%2C%20quiero%20conversar%20sobre%20mi%20empresa',
   location: 'Medellín, Colombia',
   navigation: [
     { label: 'Inicio', href: '/' },
