@@ -1,4 +1,12 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+const questions = [
+  '¿Cómo controla hoy tu empresa la información que se imprime?',
+  '¿Los documentos confidenciales quedan esperando en la impresora?',
+  '¿Pueden saber quién imprimió un documento y cuánto imprime cada usuario?',
+  '¿Conocen cuánto gastan realmente en impresión?',
+  '¿Hay documentos que deberían imprimirse solo con autorización?',
+];
+const focus = ['Visibilidad', 'Control', 'Trazabilidad', 'Seguridad', 'Eficiencia', 'Costos'];
 ---
-<PageLayout title="Print Management" description="Más control sobre la impresión y más visibilidad sobre tus recursos." active="Soluciones"><main id="contenido" class="page-main"><section class="page-hero container"><p class="section-kicker">Solución 03</p><h1>Print Management</h1><p class="page-subtitle">Más control sobre la impresión. Más visibilidad sobre tus recursos.</p><p>Evaluación y orientación sobre procesos de impresión, visibilidad, control, seguridad, eficiencia y costos. PaperCut puede aparecer como servicio complementario dentro de esta solución.</p><a class="button button-primary button-large" href="/conversemos/">Conversemos <span>→</span></a></section></main></PageLayout>
+<PageLayout title="Print Management" description="Más control sobre la impresión y más visibilidad sobre tus recursos: un documento impreso también es información." active="Soluciones"><main id="contenido" class="page-main"><section class="page-hero container"><p class="section-kicker">Solución 03</p><h1>Print Management</h1><p class="page-subtitle">Más control sobre la impresión. Más visibilidad sobre tus recursos.</p><p>La seguridad no termina en los sistemas digitales. Un documento impreso también puede exponer información financiera, comercial, contractual o personal.</p><p>Evaluamos y orientamos tus procesos de impresión con foco en el control y la gestión del entorno, no en la venta de equipos o consumibles.</p><ul class="topic-list">{focus.map((t)=><li>{t}</li>)}</ul><a class="button button-primary button-large" href="/conversemos/">Conversemos <span>→</span></a></section><section class="page-content container"><p class="section-kicker">Preguntas para empezar</p><h2>¿Cómo está hoy<br /><span>tu impresión?</span></h2><ol class="question-list">{questions.map((q,i)=><li><span aria-hidden="true">0{i+1}</span><p>{q}</p></li>)}</ol><p>Cuando la solución lo requiere, ofrecemos licenciamiento PaperCut como herramienta para llevar estos controles a la operación diaria.</p></section></main></PageLayout>
