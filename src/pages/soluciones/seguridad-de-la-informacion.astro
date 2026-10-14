@@ -1,5 +1,24 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import { siteConfig } from '../../config/site';
+const services = [
+  { name: 'Diagnóstico', text: 'Entendemos dónde está hoy tu empresa y qué tan protegida está su información.' },
+  { name: 'Brechas', text: 'Comparamos la situación actual con ISO/IEC 27001 para saber qué falta y qué tan lejos estás.' },
+  { name: 'Riesgos', text: 'Identificamos y priorizamos los riesgos de la información, con ISO/IEC 27005 como referencia.' },
+  { name: 'Acompañamiento', text: 'Te apoyamos mientras implementas las mejoras, según el alcance acordado.' },
+  { name: 'Auditoría interna', text: 'Evaluamos de forma independiente tu sistema de gestión frente a ISO/IEC 27001.' },
+];
 ---
-<PageLayout title="Seguridad de la información" description="Conoce tus riesgos y protege lo que importa." active="Soluciones"><main id="contenido" class="page-main"><section class="page-hero container"><p class="section-kicker">Solución 01</p><h1>Seguridad de la información</h1><p class="page-subtitle">Conoce tus riesgos. Protege lo que importa.</p><p>Ayudamos a tu empresa a comprender sus riesgos, reconocer brechas y establecer prioridades para fortalecer la seguridad de la información según sus necesidades. ISO/IEC 27001 es un marco de referencia.</p><a class="button button-primary button-large" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo <span>→</span></a></section><section class="page-content container"><p class="section-kicker">Nuestro enfoque</p><h2>Evaluamos. Priorizamos.<br /><span>Orientamos. Acompañamos.</span></h2><p>La solución utiliza la metodología de CERO27 para ayudar a entender la situación actual y definir prioridades.</p></section></main></PageLayout>
+<PageLayout title="Seguridad de la información" description="Conoce tus riesgos y protege lo que importa. Diagnóstico, brechas ISO/IEC 27001, gestión de riesgos, acompañamiento y auditoría interna para PYMES." active="Soluciones"><main id="contenido" class="page-main">
+<section class="page-hero container"><p class="section-kicker">Solución 01</p><h1>Seguridad de la información</h1><p class="page-subtitle">Conoce tus riesgos. Protege lo que importa.</p><p>Ayudamos a tu empresa a comprender sus riesgos, reconocer brechas y establecer prioridades para fortalecer la seguridad de la información según sus necesidades.</p><div class="check-actions"><a class="button button-primary button-large" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo <span>→</span></a><a class="button-link" href="/recursos/checklist-seguridad/">Hacer el checklist de 3 minutos <span>→</span></a></div></section>
+<section class="page-content container">
+<p class="section-kicker">Nuestro criterio</p><h2>Seguridad con <span>criterio empresarial</span></h2>
+<p>Cuando tu empresa necesita un marco reconocido, usamos ISO/IEC 27001 como referencia para el diagnóstico, la evaluación de brechas, el acompañamiento y la auditoría interna. Primero entendemos el negocio; después definimos qué controles y mejoras tienen sentido para tu realidad.</p>
+<p>La norma es una herramienta para ordenar y demostrar la gestión de la seguridad. No debe convertirse en un fin en sí misma.</p>
+<h2>Qué <span>hacemos</span></h2>
+<ul class="question-list principles">{services.map((s)=><li><span>{s.name}</span><p>{s.text}</p></li>)}</ul>
+<ul class="topic-list"><li>Auditor interno ISO/IEC 27001:2022 · Sistemas de gestión de seguridad de la información, e ISO/IEC 27005:2022 · Gestión de riesgos de seguridad de la información</li></ul>
+<h2>Nuestro enfoque</h2>
+<p>Evaluamos → Priorizamos → Orientamos → Acompañamos. El alcance se adapta al tamaño, el contexto y las necesidades de cada empresa.</p>
+<a class="button button-primary" href="/conversemos/">Conversemos <span>→</span></a>
+</section></main></PageLayout>

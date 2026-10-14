@@ -64,7 +64,7 @@
 .about-grid p:not(.section-kicker){margin:0;color:var(--muted);font-size:1.08rem;line-height:1.65}
 .page-content h2{margin-top:3.5rem}
 .page-content h2:first-child{margin-top:0}
-.page-content .question-list.principles li{grid-template-columns:9rem 1fr}
+.page-content .question-list.principles li{grid-template-columns:11rem 1fr}
 @media(max-width:650px){.about-grid{grid-template-columns:1fr}.page-content .question-list.principles li{grid-template-columns:1fr;gap:.3rem}}
 /* v11: Conversemos sin formulario */
 .page-hero h1 span{color:var(--orange)}
