@@ -103,3 +103,13 @@
 .check-note{font-size:.95rem}
 @media(max-width:900px){.resource-list{grid-template-columns:1fr}}
 @media(max-width:650px){.check-options{padding-left:0}.check-item legend{grid-template-columns:2.5rem 1fr}.check-result{padding:1.5rem}}
+/* v13.1: preguntas sin responder */
+.check-item{padding-inline:1rem;margin-inline:-1rem;border-left:3px solid transparent;transition:border-color .2s ease,background-color .2s ease}
+.check-item.missing{border-left-color:var(--orange);background:rgba(255,90,0,.07)}
+.check-item.missing .check-options label{border-color:rgba(255,90,0,.6)}
+.missing-label{display:none;margin:.9rem 0 0 4.5rem;color:var(--orange);font-weight:700;font-size:.95rem}
+.check-item.missing .missing-label{display:block}
+.check-item.blink{animation:check-blink .33s ease-in-out 3}
+@keyframes check-blink{0%,100%{background:rgba(255,90,0,.07)}50%{background:rgba(255,90,0,.32)}}
+@media(max-width:650px){.missing-label{margin-left:0}}
+@media(prefers-reduced-motion:reduce){.check-item.blink{animation:none}}

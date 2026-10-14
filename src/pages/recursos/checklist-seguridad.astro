@@ -28,6 +28,7 @@ const questions = [
       <label><input type="radio" name={`q${i}`} value="1" /> Parcialmente / no estoy seguro</label>
       <label><input type="radio" name={`q${i}`} value="0" /> No</label>
     </div>
+    <p class="missing-label" aria-hidden="true">Falta responder esta pregunta</p>
   </fieldset>
 ))}
 <p id="check-error" class="check-error" role="alert" hidden>Responde las 10 preguntas para ver tu resultado.</p>
@@ -59,11 +60,28 @@ const questions = [
   ];
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    let score = 0; const weak = [];
+    let score = 0; const weak = []; const missing = [];
+    const items = form.querySelectorAll('.check-item');
     for (let i = 0; i < total; i++) {
       const checked = form.querySelector(`input[name="q${i}"]:checked`);
-      if (!checked) { error.hidden = false; form.querySelector(`input[name="q${i}"]`).focus(); return; }
+      if (!checked) { missing.push(i); continue; }
       const v = Number(checked.value); score += v; if (v < 2) weak.push({ i, v });
+    }
+    if (missing.length) {
+      result.hidden = true;
+      error.textContent = missing.length === 1
+        ? 'Te falta 1 pregunta por responder. Está marcada en naranja.'
+        : `Te faltan ${missing.length} preguntas por responder. Están marcadas en naranja.`;
+      error.hidden = false;
+      missing.forEach((i) => {
+        const el = items[i];
+        el.classList.add('missing');
+        el.classList.remove('blink'); void el.offsetWidth; el.classList.add('blink');
+      });
+      const first = items[missing[0]];
+      first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => first.querySelector('input').focus({ preventScroll: true }), 400);
+      return;
     }
     error.hidden = true;
     const band = bands.find((b) => score >= b.min);
@@ -80,6 +98,14 @@ const questions = [
     document.getElementById('start-here').hidden = weak.length === 0;
     result.hidden = false; result.focus(); result.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-  form.addEventListener('reset', () => { result.hidden = true; error.hidden = true; });
+  form.addEventListener('change', (e) => {
+    const item = e.target.closest('.check-item');
+    if (item) item.classList.remove('missing', 'blink');
+    if (!form.querySelector('.check-item.missing')) error.hidden = true;
+  });
+  form.addEventListener('reset', () => {
+    result.hidden = true; error.hidden = true;
+    form.querySelectorAll('.check-item').forEach((el) => el.classList.remove('missing', 'blink'));
+  });
 </script>
 </PageLayout>
