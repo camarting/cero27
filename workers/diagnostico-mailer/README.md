@@ -10,7 +10,7 @@ Navegador ──POST──▶ Pages Function /api/diagnostico ──Service bind
 
 1. **Buzón de destino verificado.** Cloudflare → Email Routing → *Destination addresses*. El buzón real donde quieres recibir los diagnósticos debe aparecer como **verificado**.
 2. **Alias `diagnostico@cero27.co`** (opcional, recomendado). Email Routing → *Routing rules* → `diagnostico` → *Send to an email* → ese mismo buzón. Así, si alguien responde o escribe a esa dirección, también te llega.
-3. **Ajusta `wrangler.toml`.** Reemplaza `DESTINO` y `destination_address` con el buzón verificado (las dos deben ser iguales).
+3. **`wrangler.toml`** ya tiene `DESTINO` y `destination_address` con el buzón verificado (deben ser iguales si lo cambias).
 4. **Despliega el Worker.** Desde esta carpeta: `npx wrangler deploy`.
 5. **Conecta el Worker al sitio.** Workers & Pages → proyecto de cero27 → *Settings* → *Bindings* → *Add* → *Service binding*: nombre `MAILER`, servicio `cero27-diagnostico-mailer`. Hazlo para **Production** y **Preview**, y vuelve a desplegar.
 

@@ -8,12 +8,12 @@ workers_dev = false
 # Remitente: cualquier dirección del dominio con Email Routing activo.
 REMITENTE = "diagnostico@cero27.co"
 # Destino: debe ser una "Destination address" VERIFICADA en Email Routing (un buzón real).
-DESTINO = "REEMPLAZAR-CON-TU-BUZON-VERIFICADO@ejemplo.com"
+DESTINO = "camartingiraldo@gmail.com"
 
 [[send_email]]
 name = "EMAIL"
 # Debe coincidir con DESTINO: el Worker solo podrá enviar a esta dirección.
-destination_address = "REEMPLAZAR-CON-TU-BUZON-VERIFICADO@ejemplo.com"
+destination_address = "camartingiraldo@gmail.com"
 
 [observability]
 enabled = true
