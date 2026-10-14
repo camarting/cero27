@@ -113,3 +113,6 @@
 @keyframes check-blink{0%,100%{background:rgba(255,90,0,.07)}50%{background:rgba(255,90,0,.32)}}
 @media(max-width:650px){.missing-label{margin-left:0}}
 @media(prefers-reduced-motion:reduce){.check-item.blink{animation:none}}
+/* v14: contraste AA en botones naranjas (texto grande en negrita ≥ 18,66px) */
+.button-primary{font-size:1.1875rem}
+.header-cta{font-size:1.1875rem}

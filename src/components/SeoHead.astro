@@ -1,0 +1,34 @@
+---
+import { siteConfig } from '../config/site';
+const { noindex = false } = Astro.props;
+const og = `${siteConfig.siteUrl}/og-image.png`;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: siteConfig.name,
+  slogan: siteConfig.slogan,
+  description: 'Consultoría en seguridad de la información, gobernanza de IA, Print Management y capacitación para PYMES en Medellín y el Valle de Aburrá.',
+  url: `${siteConfig.siteUrl}/`,
+  logo: `${siteConfig.siteUrl}/assets/CERO27-logo-horizontal.svg`,
+  image: og,
+  email: siteConfig.email,
+  telephone: '+57 316 865 9331',
+  address: { '@type': 'PostalAddress', addressLocality: 'Medellín', addressRegion: 'Antioquia', addressCountry: 'CO' },
+  areaServed: [{ '@type': 'City', name: 'Medellín' }, { '@type': 'AdministrativeArea', name: 'Valle de Aburrá' }],
+  knowsAbout: ['Seguridad de la información', 'ISO/IEC 27001', 'ISO/IEC 27005', 'Gobernanza de inteligencia artificial', 'ISO/IEC 42001', 'Print Management'],
+};
+---
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#000000" />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:locale" content="es_CO" />
+<meta property="og:image" content={og} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="CERO27 — Seguridad de la información e IA para PYMES del Valle de Aburrá" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content={og} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

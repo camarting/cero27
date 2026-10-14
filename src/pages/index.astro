@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import SeoHead from '../components/SeoHead.astro';
 import '../styles/global.css';
 const approach = [
   { step: 'Evaluamos', text: 'Revisamos cómo está hoy tu empresa: su información, sus procesos y sus riesgos.' },
@@ -25,8 +26,8 @@ const solutionIcons = ['shield', 'ai', 'print', 'training'];
 <!doctype html><html lang="es"><head>
 <script is:inline>document.documentElement.classList.add('js')</script>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="CERO27 ayuda a las PYMES a comprender sus riesgos, establecer prioridades y avanzar en seguridad de la información e inteligencia artificial desde una perspectiva clara y práctica." />
-<link rel="canonical" href={`${siteConfig.siteUrl}/`} /><meta property="og:title" content={`${siteConfig.name} — ${siteConfig.slogan}`} /><meta property="og:description" content="Seguridad, IA y gobernanza, Print Management y capacitación para PYMES." /><meta property="og:type" content="website" /><meta property="og:url" content={`${siteConfig.siteUrl}/`} /><title>{siteConfig.name} — {siteConfig.slogan}</title>
+<meta name="description" content="Consultoría en seguridad de la información e IA para PYMES en Medellín y el Valle de Aburrá. Entiende tus riesgos, prioriza y avanza." />
+<link rel="canonical" href={`${siteConfig.siteUrl}/`} /><meta property="og:title" content="Seguridad de la información para PYMES en Medellín | CERO27" /><meta property="og:description" content="Ayudamos a las PYMES del Valle de Aburrá a entender sus riesgos y proteger su información, sin complicar su negocio." /><meta property="og:type" content="website" /><meta property="og:url" content={`${siteConfig.siteUrl}/`} /><title>Seguridad de la información para PYMES en Medellín | CERO27</title><SeoHead />
 </head><body>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 <header class="site-header"><div class="container header-inner">
