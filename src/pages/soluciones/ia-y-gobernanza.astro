@@ -1,4 +1,17 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+const questions = [
+  '¿Qué información están introduciendo tus colaboradores en herramientas de IA?',
+  '¿Existen reglas claras sobre qué se puede compartir y qué no?',
+  '¿Quién define, controla y revisa el uso de IA dentro de la empresa?',
+];
+const focus = ['Uso responsable de IA', 'Reglas claras', 'Protección de la información', 'Riesgos y controles'];
 ---
-<PageLayout title="IA y gobernanza" description="Usa la inteligencia artificial con criterio, control y responsabilidad." active="Soluciones"><main id="contenido" class="page-main"><section class="page-hero container"><p class="section-kicker">Solución 02</p><h1>IA y gobernanza</h1><p class="page-subtitle">Usa la inteligencia artificial con criterio, control y responsabilidad.</p><p>Ayudamos a comprender los riesgos y la gobernanza asociados al uso de inteligencia artificial, incluyendo información, responsabilidades y controles. ISO/IEC 42001 es un marco de referencia.</p><a class="button button-primary button-large" href="/conversemos/">Conversemos <span>→</span></a></section><section class="page-content container"><p>El diagnóstico externo de ISO/IEC 27001 no se presenta como una evaluación de gobernanza de IA.</p></section></main></PageLayout>
+<PageLayout title="IA y gobernanza" description="La IA puede ayudarte a avanzar. También necesita reglas. Gobernanza práctica del uso de inteligencia artificial para PYMES." active="Soluciones"><main id="contenido" class="page-main">
+<section class="page-hero container"><p class="section-kicker">Solución 02</p><h1>IA y gobernanza</h1><p class="page-subtitle">Usa la inteligencia artificial con criterio, control y responsabilidad.</p><p>La inteligencia artificial ya forma parte de muchas operaciones. La pregunta es si tu empresa sabe cómo usarla sin perder el control de su información.</p><ul class="topic-list">{focus.map((t)=><li>{t}</li>)}</ul><a class="button button-primary button-large" href="/conversemos/">Conversemos <span>→</span></a></section>
+<section class="page-content container"><p class="section-kicker">Preguntas clave</p><h2>La IA puede ayudarte a avanzar.<br /><span>También necesita reglas.</span></h2>
+<ol class="question-list">{questions.map((q,i)=><li><span aria-hidden="true">0{i+1}</span><p>{q}</p></li>)}</ol>
+<p>Te ayudamos a establecer un enfoque práctico de gobernanza para innovar con IA sin perder de vista la seguridad, la responsabilidad y la protección de la información.</p>
+<p>Usamos ISO/IEC 42001 como marco de referencia y contamos con certificación como auditor interno ISO/IEC 42001:2023 (sistemas de gestión de inteligencia artificial).</p>
+<p>El diagnóstico «Conocer mi nivel de riesgo» se basa en ISO/IEC 27001 y no evalúa la gobernanza de IA. Para hablar de IA en tu empresa, <a href="/conversemos/">conversemos</a>.</p>
+</section></main></PageLayout>
