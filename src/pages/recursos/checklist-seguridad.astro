@@ -1,0 +1,85 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { siteConfig } from '../../config/site';
+
+const questions = [
+  { q: '¿Sabes cuál es la información más importante de tu empresa y dónde está guardada?', tip: 'Identificar la información crítica (clientes, finanzas, contratos) y dónde vive es el punto de partida para protegerla.' },
+  { q: '¿Cada persona tiene acceso solo a la información que necesita para su trabajo?', tip: 'Revisar quién puede ver y modificar qué información reduce el impacto de errores y accesos indebidos.' },
+  { q: '¿El correo y los sistemas importantes usan verificación en dos pasos?', tip: 'Activar la verificación en dos pasos en correo y sistemas críticos dificulta el robo de cuentas.' },
+  { q: '¿Haces copias de seguridad periódicas y has comprobado que puedes recuperarlas?', tip: 'Una copia que nunca se ha probado no garantiza que puedas recuperar tu información cuando la necesites.' },
+  { q: 'Cuando alguien sale de la empresa, ¿le quitas los accesos el mismo día?', tip: 'Definir un paso de retiro de accesos evita que cuentas activas queden en manos de quien ya no trabaja contigo.' },
+  { q: '¿Los equipos y programas de la empresa se actualizan de forma regular?', tip: 'Las actualizaciones corrigen fallas de seguridad conocidas; conviene que no dependan de la memoria de cada persona.' },
+  { q: '¿Tu equipo sabe reconocer correos fraudulentos y otros intentos de engaño?', tip: 'Muchos incidentes empiezan con un correo o mensaje engañoso. La capacitación es una de las medidas más rentables.' },
+  { q: '¿Hay reglas claras sobre qué información se puede compartir en herramientas de inteligencia artificial?', tip: 'Sin reglas, información confidencial puede terminar en herramientas de IA sin que la empresa lo sepa.' },
+  { q: 'Si ocurre un incidente de seguridad, ¿está claro qué hacer y a quién avisar?', tip: 'Tener definido el primer paso ante un incidente reduce el tiempo de reacción y el daño.' },
+  { q: '¿Controlan quién imprime documentos confidenciales y que no queden olvidados en la impresora?', tip: 'Los documentos impresos también exponen información; controlar la impresión cierra una brecha que suele pasarse por alto.' },
+];
+---
+<PageLayout title="Checklist: ¿qué tan preparada está tu empresa para proteger su información?" description="Checklist gratuito de 10 preguntas para gerentes de PYMES: descubre qué tan preparada está tu empresa para proteger su información. No pide datos personales." active="Recursos">
+<main id="contenido" class="page-main">
+<section class="page-hero container"><p class="section-kicker">Recurso gratuito · Checklist</p><h1>¿Qué tan preparada está tu empresa para <span>proteger su información?</span></h1><p>Diez preguntas sencillas para gerentes, sin lenguaje técnico. Te toma unos tres minutos y al final verás por dónde conviene empezar.</p><p class="checklist-privacy">No pedimos datos personales: tus respuestas se procesan solo en tu navegador y no se envían ni se guardan.</p></section>
+<section class="page-content container">
+<form id="checklist" class="checklist" novalidate>
+{questions.map((item, i) => (
+  <fieldset class="check-item">
+    <legend><span class="check-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{item.q}</legend>
+    <div class="check-options">
+      <label><input type="radio" name={`q${i}`} value="2" /> Sí</label>
+      <label><input type="radio" name={`q${i}`} value="1" /> Parcialmente / no estoy seguro</label>
+      <label><input type="radio" name={`q${i}`} value="0" /> No</label>
+    </div>
+  </fieldset>
+))}
+<p id="check-error" class="check-error" role="alert" hidden>Responde las 10 preguntas para ver tu resultado.</p>
+<div class="check-actions"><button class="button button-primary button-large" type="submit">Ver mi resultado <span>→</span></button><button class="button-link" type="reset">Empezar de nuevo</button></div>
+</form>
+
+<div id="check-result" class="check-result" aria-live="polite" tabindex="-1" hidden>
+  <p class="section-kicker">Tu resultado</p>
+  <p class="check-score"><strong id="score-value"></strong> de 20 puntos</p>
+  <h2 id="result-title"></h2>
+  <p id="result-text"></p>
+  <div id="start-here" hidden>
+    <h3>Por dónde empezar</h3>
+    <ul id="tips" class="question-list"></ul>
+  </div>
+  <p class="check-note">Este checklist es orientativo: te da una primera mirada, pero no reemplaza un diagnóstico ni una auditoría.</p>
+  <div class="check-actions"><a class="button button-primary" href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer">Conversemos por WhatsApp <span>→</span></a><a class="button-link" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Hacer el diagnóstico completo <span>→</span></a></div>
+</div>
+</section>
+</main>
+<script is:inline define:vars={{ tips: questions.map((x) => x.tip), total: questions.length }}>
+  const form = document.getElementById('checklist');
+  const result = document.getElementById('check-result');
+  const error = document.getElementById('check-error');
+  const bands = [
+    { min: 16, title: 'Tienes una buena base. Conviene validarla.', text: 'Tu empresa ya cuenta con varias prácticas importantes. El siguiente paso es comprobar que funcionan como crees y cerrar las brechas que quedan.' },
+    { min: 9, title: 'Vas por buen camino, pero hay brechas que atender.', text: 'Hay prácticas en marcha, pero también puntos que pueden exponer tu información. Priorizar bien te permite avanzar sin complicar la operación.' },
+    { min: 0, title: 'Hay brechas importantes por atender.', text: 'Varios aspectos básicos todavía no están cubiertos. La buena noticia: con prioridades claras se puede avanzar rápido y sin burocracia.' },
+  ];
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let score = 0; const weak = [];
+    for (let i = 0; i < total; i++) {
+      const checked = form.querySelector(`input[name="q${i}"]:checked`);
+      if (!checked) { error.hidden = false; form.querySelector(`input[name="q${i}"]`).focus(); return; }
+      const v = Number(checked.value); score += v; if (v < 2) weak.push({ i, v });
+    }
+    error.hidden = true;
+    const band = bands.find((b) => score >= b.min);
+    document.getElementById('score-value').textContent = String(score);
+    document.getElementById('result-title').textContent = band.title;
+    document.getElementById('result-text').textContent = band.text;
+    const list = document.getElementById('tips'); list.innerHTML = '';
+    weak.sort((a, b) => a.v - b.v).slice(0, 3).forEach(({ i }) => {
+      const li = document.createElement('li');
+      const n = document.createElement('span'); n.textContent = String(i + 1).padStart(2, '0');
+      const p = document.createElement('p'); p.textContent = tips[i];
+      li.append(n, p); list.append(li);
+    });
+    document.getElementById('start-here').hidden = weak.length === 0;
+    result.hidden = false; result.focus(); result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  form.addEventListener('reset', () => { result.hidden = true; error.hidden = true; });
+</script>
+</PageLayout>

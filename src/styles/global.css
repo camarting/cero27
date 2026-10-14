@@ -78,3 +78,28 @@
 .contact-option p{margin:0;color:var(--muted);line-height:1.55}
 .contact-cta{margin-top:auto;padding-top:1rem;font-weight:700;border-bottom:1px solid var(--orange);align-self:flex-start;padding-bottom:.3rem}
 @media(max-width:900px){.contact-options{grid-template-columns:1fr}.contact-option{border-right:0;border-bottom:1px solid var(--line)}.contact-option:last-child{border-bottom:0}}
+/* v13: checklist */
+.resource-list{grid-template-columns:repeat(2,1fr)}
+.checklist-privacy{color:#fff!important;border-left:3px solid var(--orange);padding-left:1rem}
+.checklist{max-width:900px}
+.check-item{margin:0;padding:1.6rem 0;border:0;border-bottom:1px solid var(--line)}
+.check-item:first-child{border-top:1px solid var(--line)}
+.check-item legend{display:grid;grid-template-columns:3.5rem 1fr;gap:1rem;float:left;width:100%;margin-bottom:1rem;color:#fff;font-size:1.15rem;line-height:1.45;font-weight:600}
+.check-num{color:var(--orange);font-weight:700;letter-spacing:.08em}
+.check-options{clear:both;display:flex;flex-wrap:wrap;gap:.7rem;padding-left:4.5rem}
+.check-options label{display:inline-flex;align-items:center;gap:.55rem;padding:.6rem .95rem;border:1px solid var(--line);color:var(--muted);cursor:pointer}
+.check-options label:has(input:checked){border-color:var(--orange);color:#fff}
+.check-options input{accent-color:var(--orange)}
+.check-options label:focus-within{outline:2px solid var(--orange);outline-offset:2px}
+.check-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;margin-top:2rem}
+.check-actions button.button-link{background:none;border:0;color:#fff;font:inherit;cursor:pointer;padding:0 0 .35rem}
+.check-error{color:var(--orange);font-weight:700;margin-top:1.5rem}
+.check-result{max-width:900px;margin-top:4rem;padding:2.5rem;border:1px solid var(--orange)}
+.check-result:focus{outline:none}
+.check-score{margin:0;color:var(--muted);font-size:1.1rem}
+.check-score strong{color:var(--orange);font-size:3.5rem;letter-spacing:-.04em;margin-right:.3rem}
+.check-result h2{margin:.5rem 0 1rem!important;font-size:clamp(1.6rem,3vw,2.4rem)}
+.check-result h3{margin-top:2rem}
+.check-note{font-size:.95rem}
+@media(max-width:900px){.resource-list{grid-template-columns:1fr}}
+@media(max-width:650px){.check-options{padding-left:0}.check-item legend{grid-template-columns:2.5rem 1fr}.check-result{padding:1.5rem}}

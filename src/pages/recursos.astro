@@ -2,4 +2,12 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import { siteConfig } from '../config/site';
 ---
-<PageLayout title="Recursos" description="Recursos de CERO27 para aprender sobre riesgos y seguridad de la información." active="Recursos"><main id="contenido" class="page-main"><section class="page-hero container"><p class="section-kicker">Recursos</p><h1>Decisiones mejor informadas.</h1><p>El espacio de Recursos contempla guías, diagnóstico, artículos y preguntas frecuentes.</p></section><section class="page-content container"><p class="pending-note">Los recursos concretos (guías, artículos y preguntas frecuentes) están pendientes de creación y aprobación. No hay publicaciones disponibles en esta versión.</p><p>Para comenzar por el diagnóstico externo, visita <a href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer">Conocer mi nivel de riesgo</a>.</p></section></main></PageLayout>
+<PageLayout title="Recursos" description="Recursos prácticos de CERO27 para que las PYMES comprendan sus riesgos y prioricen su seguridad." active="Recursos"><main id="contenido" class="page-main">
+<section class="page-hero container"><p class="section-kicker">Recursos</p><h1>Decisiones mejor <span>informadas.</span></h1><p>Contenido práctico para comprender riesgos, ordenar prioridades y avanzar con mayor criterio.</p></section>
+<section class="page-content container">
+<div class="contact-options resource-list">
+<a class="contact-option" href="/recursos/checklist-seguridad/"><span class="section-kicker">Checklist gratuito</span><strong>¿Qué tan preparada está tu empresa para proteger su información?</strong><p>Diez preguntas para gerentes, sin lenguaje técnico. Resultado inmediato y sin pedir datos personales.</p><span class="contact-cta">Hacer el checklist <span>→</span></span></a>
+<a class="contact-option" href={siteConfig.diagnosticUrl} target="_blank" rel="noopener noreferrer"><span class="section-kicker">Diagnóstico</span><strong>Conocer mi nivel de riesgo</strong><p>Una evaluación más completa, basada en ISO/IEC 27001, para saber dónde estás y qué conviene priorizar.</p><span class="contact-cta">Empezar el diagnóstico <span>→</span></span></a>
+</div>
+<p>Iremos publicando más guías y artículos prácticos en esta sección.</p>
+</section></main></PageLayout>
