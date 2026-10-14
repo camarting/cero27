@@ -1,0 +1,19 @@
+name = "cero27-diagnostico-mailer"
+main = "src/index.js"
+compatibility_date = "2026-10-14"
+# Solo lo llama la Pages Function de cero27 por Service binding; no necesita URL pública.
+workers_dev = false
+
+[vars]
+# Remitente: cualquier dirección del dominio con Email Routing activo.
+REMITENTE = "diagnostico@cero27.co"
+# Destino: debe ser una "Destination address" VERIFICADA en Email Routing (un buzón real).
+DESTINO = "REEMPLAZAR-CON-TU-BUZON-VERIFICADO@ejemplo.com"
+
+[[send_email]]
+name = "EMAIL"
+# Debe coincidir con DESTINO: el Worker solo podrá enviar a esta dirección.
+destination_address = "REEMPLAZAR-CON-TU-BUZON-VERIFICADO@ejemplo.com"
+
+[observability]
+enabled = true

@@ -1,0 +1,534 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { siteConfig } from '../config/site';
+import { areas, perfil, niveles } from '../data/diagnostico';
+
+const pasos = [
+  { nombre: 'Evaluamos', texto: 'Respondes 24 preguntas sobre cómo está hoy tu empresa.' },
+  { nombre: 'Priorizamos', texto: 'Calculamos tu nivel de riesgo e identificamos lo más urgente.' },
+  { nombre: 'Orientamos', texto: 'Te decimos qué hacer y en qué orden, en lenguaje claro.' },
+  { nombre: 'Acompañamos', texto: 'Si lo necesitas, te apoyamos mientras implementas los cambios.' },
+];
+const totalPreguntas = areas.reduce((n, a) => n + a.preguntas.length, 0);
+const opciones = [
+  { valor: '1', texto: 'Sí' },
+  { valor: '0.5', texto: 'Parcialmente' },
+  { valor: '0', texto: 'No' },
+  { valor: 'ns', texto: 'No sé' },
+];
+---
+<PageLayout
+  title="Diagnóstico de seguridad de la información"
+  description={`Autodiagnóstico gratuito basado en ISO/IEC 27001:2022 para PYMES: ${totalPreguntas} preguntas, unos 8 minutos. Conoce tu nivel de riesgo y qué conviene priorizar.`}
+  active=""
+>
+<main id="contenido" class="page-main dx">
+  <section class="container dx-head">
+    <p class="section-kicker">Diagnóstico · ISO/IEC 27001:2022</p>
+    <h1>Conoce tu nivel de <span>riesgo</span></h1>
+    <ol class="dx-steps" aria-label="Metodología CERO27">
+      {pasos.map((p, i) => (
+        <li data-paso={i}><span>0{i + 1}</span><strong>{p.nombre}</strong><p>{p.texto}</p></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="container dx-body">
+    <noscript><p class="pending-note">Este diagnóstico necesita JavaScript activado en tu navegador.</p></noscript>
+
+    <!-- Inicio -->
+    <div id="dx-intro" class="dx-screen">
+      <h2>Una primera mirada, <span>sin tecnicismos</span></h2>
+      <p>{totalPreguntas} preguntas en 6 áreas clave de la norma ISO/IEC 27001:2022. Te toma unos 8 minutos y al final verás tu nivel de riesgo y por dónde empezar.</p>
+      <ul class="dx-facts">
+        <li><strong>8 min</strong><span>aproximadamente</span></li>
+        <li><strong>{totalPreguntas}</strong><span>preguntas</span></li>
+        <li><strong>6</strong><span>áreas evaluadas</span></li>
+      </ul>
+      <p class="dx-privacy">Tus respuestas se procesan solo en tu navegador y no se envían a ningún lado. Si al final pides el reporte completo, solo nos llegan tus datos de contacto y el resumen del resultado.</p>
+      <div class="check-actions"><button class="button button-primary button-large" type="button" data-ir="perfil">Empezar el diagnóstico <span>→</span></button></div>
+    </div>
+
+    <!-- Perfil de la empresa -->
+    <form id="dx-perfil" class="dx-screen" novalidate hidden>
+      <p class="dx-progress-label">Antes de empezar · Tu empresa</p>
+      <div class="dx-progress" aria-hidden="true"><i style="width:4%"></i></div>
+      <h2>Cuéntanos de tu <span>empresa</span></h2>
+      <p>Esto nos ayuda a ajustar las recomendaciones a tu realidad.</p>
+      <fieldset class="check-item">
+        <legend>¿A qué se dedica tu empresa?</legend>
+        <div class="check-options">{perfil.sector.map((s) => <label><input type="radio" name="sector" value={s} /> {s}</label>)}</div>
+        <p class="missing-label" aria-hidden="true">Falta responder esta pregunta</p>
+      </fieldset>
+      <fieldset class="check-item">
+        <legend>¿Cuántas personas trabajan en ella?</legend>
+        <div class="check-options">{perfil.tamano.map((s) => <label><input type="radio" name="tamano" value={s} /> {s}</label>)}</div>
+        <p class="missing-label" aria-hidden="true">Falta responder esta pregunta</p>
+      </fieldset>
+      <fieldset class="check-item">
+        <legend>¿Maneja datos personales de clientes, pacientes o empleados?</legend>
+        <div class="check-options">{perfil.datos.map((s) => <label><input type="radio" name="datos" value={s} /> {s}</label>)}</div>
+        <p class="missing-label" aria-hidden="true">Falta responder esta pregunta</p>
+      </fieldset>
+      <p class="check-error dx-error" role="alert" hidden></p>
+      <div class="check-actions"><button class="button button-primary button-large" type="submit">Continuar <span>→</span></button><button class="button-link" type="button" data-ir="intro">← Volver</button></div>
+    </form>
+
+    <!-- Áreas -->
+    {areas.map((area, ai) => (
+      <form class="dx-screen dx-area" data-area={ai} novalidate hidden>
+        <p class="dx-progress-label">Área {ai + 1} de {areas.length} · {area.nombre}</p>
+        <div class="dx-progress" aria-hidden="true"><i style={`width:${Math.round(((ai + 1) / (areas.length + 1)) * 100)}%`}></i></div>
+        <h2>{area.nombre}</h2>
+        <p>{area.descripcion}</p>
+        {area.preguntas.map((q, qi) => (
+          <fieldset class="check-item">
+            <legend><span class="check-num" aria-hidden="true">{String(ai * 4 + qi + 1).padStart(2, '0')}</span>{q.texto}</legend>
+            <p class="dx-why">{q.porque}</p>
+            <div class="check-options">
+              {opciones.map((o) => <label><input type="radio" name={q.id} value={o.valor} /> {o.texto}</label>)}
+            </div>
+            <p class="missing-label" aria-hidden="true">Falta responder esta pregunta</p>
+          </fieldset>
+        ))}
+        <p class="check-error dx-error" role="alert" hidden></p>
+        <div class="check-actions">
+          <button class="button button-primary button-large" type="submit">{ai === areas.length - 1 ? 'Ver mi resultado' : 'Siguiente área'} <span>→</span></button>
+          <button class="button-link" type="button" data-atras>← Anterior</button>
+        </div>
+      </form>
+    ))}
+
+    <!-- Resultado preliminar + captura de contacto -->
+    <div id="dx-preview" class="dx-screen" hidden tabindex="-1">
+      <p class="section-kicker">Tu resultado preliminar</p>
+      <div class="dx-score">
+        <div>
+          <p class="dx-score-pct"><strong data-r="pct"></strong>%</p>
+          <p class="dx-score-label">de prácticas cubiertas</p>
+        </div>
+        <div>
+          <h2 data-r="riesgo"></h2>
+          <p data-r="texto"></p>
+          <p class="dx-weakest">Tu área más expuesta: <strong data-r="debil"></strong></p>
+        </div>
+      </div>
+      <div class="dx-meter" aria-hidden="true"><i data-r="meter"></i></div>
+
+      <div class="dx-gate">
+        <div class="dx-gate-copy">
+          <h2>Recibe tu reporte <span>completo</span></h2>
+          <p>Déjanos tus datos y verás de inmediato:</p>
+          <ul class="dx-list">
+            <li>Tu resultado en cada una de las 6 áreas.</li>
+            <li>Tus 3 prioridades, ordenadas por impacto.</li>
+            <li>Qué hacer con cada una, paso a paso.</li>
+            <li>Un reporte que puedes guardar en PDF.</li>
+          </ul>
+          <p>Un consultor de CERO27 podrá contactarte para revisar el resultado contigo.</p>
+        </div>
+        <form id="dx-contacto" class="contact-form dx-contact" novalidate>
+          <label>Nombre completo<input name="nombre" autocomplete="name" maxlength="120" required /></label>
+          <label>Cargo<input name="cargo" autocomplete="organization-title" maxlength="120" required /></label>
+          <label>Empresa<input name="empresa" autocomplete="organization" maxlength="120" required /></label>
+          <label>Correo corporativo<input name="correo" type="email" autocomplete="email" maxlength="160" required /></label>
+          <label>Celular o WhatsApp <small>(opcional)</small><input name="telefono" type="tel" autocomplete="tel" maxlength="40" /></label>
+          <label class="dx-hp" aria-hidden="true">Sitio web<input name="sitio_web" tabindex="-1" autocomplete="off" /></label>
+          <label class="dx-consent"><input type="checkbox" name="consentimiento" required /> <span>Autorizo a CERO27 a tratar mis datos de contacto y el resumen de este diagnóstico para contactarme sobre mi resultado y sus servicios, conforme a la Ley 1581 de 2012 y la <a href="/politica-de-privacidad/" target="_blank" rel="noopener">política de privacidad</a>. Puedo consultar, actualizar o suprimir mis datos escribiendo a {siteConfig.email}.</span></label>
+          <p class="check-error dx-error" role="alert" hidden></p>
+          <button class="button button-primary button-large" type="submit">Ver mi reporte completo <span>→</span></button>
+          <p class="dx-small">Tus respuestas detalladas no se envían: solo nos llegan tus datos de contacto, el perfil de la empresa y el resumen del resultado.</p>
+        </form>
+      </div>
+      <div class="check-actions dx-noprint"><button class="button-link" type="button" data-atras>← Revisar mis respuestas</button></div>
+    </div>
+
+    <!-- Reporte completo -->
+    <div id="dx-full" class="dx-screen dx-report" hidden tabindex="-1">
+      <p class="dx-notice" data-r="aviso" hidden></p>
+      <div class="dx-report-head">
+        <img class="dx-print-only" src="/assets/CERO27-logo-horizontal-fondo-claro.svg" alt="CERO27" width="200" />
+        <p class="section-kicker">Reporte de diagnóstico</p>
+        <h2><span data-r="empresa"></span>: <span class="dx-accent" data-r="riesgo2"></span></h2>
+        <p class="dx-meta" data-r="meta"></p>
+      </div>
+
+      <section class="dx-block">
+        <p class="dx-block-kicker"><span>01</span> Evaluamos</p>
+        <h3>Tu resultado por área</h3>
+        <p class="dx-score-inline"><strong data-r="pct2"></strong>% de prácticas cubiertas en total</p>
+        <ul class="dx-bars" data-r="barras"></ul>
+        <p class="dx-small" data-r="nosabe" hidden></p>
+      </section>
+
+      <section class="dx-block">
+        <p class="dx-block-kicker"><span>02</span> Priorizamos</p>
+        <h3>Tus 3 prioridades</h3>
+        <p>Ordenadas por el impacto que tendría cerrarlas primero.</p>
+        <ol class="dx-priorities" data-r="prioridades"></ol>
+      </section>
+
+      <section class="dx-block">
+        <p class="dx-block-kicker"><span>03</span> Orientamos</p>
+        <h3>Qué hacer, en este orden</h3>
+        <ol class="question-list dx-plan" data-r="plan"></ol>
+        <details class="dx-more" data-r="otras-wrap">
+          <summary>Ver las demás brechas detectadas (<span data-r="otras-n"></span>)</summary>
+          <ul class="dx-list" data-r="otras"></ul>
+        </details>
+      </section>
+
+      <section class="dx-block dx-cta">
+        <p class="dx-block-kicker"><span>04</span> Acompañamos</p>
+        <h3>¿Quieres avanzar con <span>acompañamiento</span>?</h3>
+        <p>Revisamos contigo este resultado, validamos las prioridades con evidencia y te ayudamos a implementarlas sin complicar la operación.</p>
+        <div class="check-actions dx-noprint">
+          <a class="button button-primary button-large" data-r="wa" href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer">Hablemos de mi resultado <span>→</span></a>
+          <button class="button-link" type="button" data-imprimir>Guardar en PDF / imprimir</button>
+          <a class="button-link" href="/conversemos/">Otras formas de contacto</a>
+        </div>
+        <p class="dx-small dx-print-only">CERO27 · {siteConfig.email} · WhatsApp {siteConfig.whatsappDisplay} · {siteConfig.siteUrl.replace('https://', '')}</p>
+      </section>
+
+      <p class="check-note">Este diagnóstico es orientativo y se basa en tus respuestas: da una primera mirada, pero no reemplaza una auditoría ni una evaluación de riesgos con evidencia.</p>
+      <div class="check-actions dx-noprint"><button class="button-link" type="button" data-reiniciar>Empezar de nuevo</button></div>
+    </div>
+  </section>
+</main>
+
+<style is:global>
+  .dx-head{padding-block:clamp(3rem,6vw,5rem) 2rem}
+  .dx-head h1{margin:0;font-size:clamp(2.8rem,6vw,5.7rem);line-height:.98;letter-spacing:-.05em}
+  .dx-head h1 span,.dx h2 span,.dx h3 span{color:var(--orange)}
+  .dx-steps{display:grid;grid-template-columns:repeat(4,1fr);margin:3rem 0 0;padding:0;list-style:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .dx-steps li{position:relative;padding:1.3rem 1.4rem;border-right:1px solid var(--line);color:var(--soft);transition:color .3s ease}
+  .dx-steps li:last-child{border-right:0}
+  .dx-steps li:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+  .dx-steps span{display:block;color:var(--orange);font-weight:700;letter-spacing:.08em;font-size:.85rem}
+  .dx-steps strong{display:block;margin-top:1.4rem;font-size:1.3rem;color:inherit}
+  .dx-steps p{margin:.5rem 0 0;font-size:.95rem;line-height:1.5}
+  .dx-steps li.is-done{color:var(--muted)}
+  .dx-steps li.is-current{color:#fff}
+  .dx-steps li.is-current:after,.dx-steps li.is-done:after{transform:scaleX(1)}
+  .dx-steps li.is-done:after{opacity:.4}
+  .dx-body{padding-block:2rem 7rem}
+  .dx-screen{max-width:960px}
+  .dx-screen>h2,.dx-gate h2,.dx-report-head h2{margin:0 0 1rem;font-size:clamp(2rem,4vw,3.4rem);line-height:1;letter-spacing:-.045em}
+  .dx-screen>p:not(.section-kicker):not(.check-error):not(.dx-progress-label):not(.dx-notice),.dx-gate-copy p,.dx-block>p{color:var(--muted);font-size:1.1rem;line-height:1.6;max-width:760px}
+  .dx-facts{display:flex;flex-wrap:wrap;gap:0;margin:2rem 0;padding:0;list-style:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .dx-facts li{flex:1 1 180px;padding:1.2rem 1.4rem;border-right:1px solid var(--line)}
+  .dx-facts li:last-child{border-right:0}
+  .dx-facts strong{display:block;font-size:2.2rem;color:var(--orange);letter-spacing:-.03em}
+  .dx-facts span{color:var(--muted)}
+  .dx-privacy{border-left:3px solid var(--orange);padding:.8rem 1rem;background:rgba(255,90,0,.08);font-size:1rem!important;color:#fff!important}
+  .dx-progress-label{margin:0 0 .7rem;color:var(--orange);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.82rem}
+  .dx-progress{height:4px;background:var(--line);margin-bottom:2.5rem}
+  .dx-progress i{display:block;height:100%;background:var(--orange);transition:width .5s ease}
+  .dx .check-item legend{font-size:1.15rem;font-weight:700;line-height:1.4;padding:0}
+  .dx .check-item legend .check-num{margin-right:1rem}
+  .dx-why{margin:.5rem 0 1rem;color:var(--soft);font-size:.98rem;line-height:1.5}
+  .dx .check-options{margin-top:.9rem}
+  .dx .missing-label{display:none;margin:.7rem 0 0;color:var(--orange);font-weight:700;font-size:.9rem}
+  .dx .check-item.missing{border-left-color:var(--orange);background:rgba(255,90,0,.06)}
+  .dx .check-item.missing .missing-label{display:block}
+  .dx-score{display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:center;margin-top:1rem}
+  .dx-score .dx-score-pct{margin:0;font-size:clamp(4.5rem,10vw,8rem);line-height:.9;letter-spacing:-.06em;font-weight:700}
+  .dx-score-pct strong{color:var(--orange)}
+  .dx-score-label{margin:.4rem 0 0;color:var(--muted)}
+  .dx-score h2{margin:0 0 .8rem;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.04em;line-height:1}
+  .dx-score p{color:var(--muted);font-size:1.1rem;line-height:1.6;margin:0 0 .8rem}
+  .dx-weakest{color:#fff!important}
+  .dx-weakest strong{color:var(--orange)}
+  .dx-meter{height:10px;margin:2rem 0 0;background:var(--line);position:relative}
+  .dx-meter i{display:block;height:100%;width:0;background:var(--orange);transition:width .9s ease}
+  .dx-gate{display:grid;grid-template-columns:1fr 1.1fr;gap:3.5rem;margin-top:4rem;padding-top:3rem;border-top:1px solid var(--line)}
+  .dx-list{margin:1rem 0;padding:0;list-style:none}
+  .dx-list li{position:relative;padding:.55rem 0 .55rem 1.6rem;color:#fff;line-height:1.5;border-bottom:1px solid var(--line)}
+  .dx-list li:before{content:"";position:absolute;left:0;top:1.15rem;width:.75rem;height:3px;background:var(--orange)}
+  .dx-contact small{color:var(--soft);font-weight:400}
+  .dx-contact input:focus{outline:2px solid var(--orange);outline-offset:0;border-color:var(--orange)}
+  .dx-contact input[aria-invalid="true"]{border-color:var(--orange)}
+  .dx-consent{display:grid!important;grid-template-columns:auto 1fr;gap:.8rem!important;align-items:start;font-size:.92rem;line-height:1.5;color:var(--muted)!important}
+  .dx-consent input{width:1.15rem!important;height:1.15rem;margin-top:.15rem;accent-color:var(--orange)}
+  .dx-consent a{color:#fff;border-bottom:1px solid var(--orange);text-decoration:none}
+  .dx-hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .dx-small{font-size:.88rem!important;color:var(--soft)!important;line-height:1.5}
+  .dx-contact button[disabled]{opacity:.6;cursor:wait}
+  .dx-notice{border-left:3px solid var(--orange);padding:.9rem 1.1rem;background:rgba(255,90,0,.08);color:#fff;margin:0 0 2rem}
+  .dx-report-head{padding-bottom:2rem;border-bottom:1px solid var(--line)}
+  .dx-accent{color:var(--orange)}
+  .dx-meta{color:var(--soft)!important;font-size:.95rem!important}
+  .dx-block{padding:2.5rem 0;border-bottom:1px solid var(--line)}
+  .dx-block h3{margin:.4rem 0 1rem;font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.03em;line-height:1.1}
+  .dx-block-kicker{margin:0;color:var(--orange)!important;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.82rem!important}
+  .dx-block-kicker span{margin-right:.6rem}
+  .dx-score-inline{color:#fff!important}
+  .dx-score-inline strong{color:var(--orange);font-size:1.4rem}
+  .dx-bars{margin:1.5rem 0 0;padding:0;list-style:none;display:grid;gap:1.1rem}
+  .dx-bars li{display:grid;grid-template-columns:minmax(180px,280px) 1fr 3.5rem;gap:1.2rem;align-items:center}
+  .dx-bars .dx-bar{height:10px;background:var(--line)}
+  .dx-bars .dx-bar i{display:block;height:100%;background:var(--orange)}
+  .dx-bars .is-weak .dx-bar-name{color:var(--orange)}
+  .dx-bars .dx-bar-pct{text-align:right;font-weight:700}
+  .dx-priorities{margin:1.5rem 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .dx-priorities li{padding:1.5rem 1.4rem;border-right:1px solid var(--line)}
+  .dx-priorities li:last-child{border-right:0}
+  .dx-priorities .dx-p-num{color:var(--orange);font-weight:700;letter-spacing:.08em}
+  .dx-priorities .dx-p-area{display:block;margin-top:1.6rem;color:var(--soft);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em}
+  .dx-priorities strong{display:block;margin:.5rem 0;font-size:1.1rem;line-height:1.35}
+  .dx-priorities p{margin:0;color:var(--muted);line-height:1.5;font-size:.98rem}
+  .dx-plan p{margin:0;line-height:1.55}
+  .dx-plan small{display:block;margin-top:.35rem;color:var(--soft)}
+  .dx-more{margin-top:1rem}
+  .dx-more summary{cursor:pointer;color:#fff;border-bottom:1px solid var(--orange);display:inline-block;padding:.4rem 0}
+  .dx-more .dx-list li{color:var(--muted)}
+  .dx-more .dx-list strong{color:#fff;display:block}
+  .dx-cta{border-bottom:0}
+  .dx-print-only{display:none!important}
+  .dx h2[tabindex="-1"]:focus{outline:none}
+  @media(max-width:1100px){.dx-steps{grid-template-columns:repeat(2,1fr)}.dx-steps li:nth-child(2){border-right:0}.dx-steps li:nth-child(-n+2){border-bottom:1px solid var(--line)}.dx-gate{grid-template-columns:1fr;gap:2rem}}
+  @media(max-width:650px){.dx-steps li{padding:1rem}.dx-steps p{display:none}.dx-steps strong{margin-top:.6rem;font-size:1.05rem}.dx-score{grid-template-columns:1fr;gap:1rem}.dx-bars li{grid-template-columns:1fr 3rem;gap:.4rem 1rem}.dx-bars .dx-bar{grid-column:1/-1;grid-row:2}.dx-priorities{grid-template-columns:1fr}.dx-priorities li{border-right:0;border-bottom:1px solid var(--line)}.dx-priorities li:last-child{border-bottom:0}.dx-facts li{border-right:0;border-bottom:1px solid var(--line)}}
+  @media(prefers-reduced-motion:reduce){.dx-steps li:after,.dx-meter i,.dx-progress i{transition:none}}
+  @media print{
+    @page{margin:16mm}
+    html,body{background:#fff!important;color:#000!important}
+    .site-header,.site-footer,.whatsapp-float,.skip-link,.dx-head,.dx-noprint,.dx-notice,#dx-intro,#dx-perfil,.dx-area,#dx-preview{display:none!important}
+    .page-main{padding-top:0}
+    .dx-body{padding:0}
+    .dx-print-only{display:block!important}
+    img.dx-print-only{margin-bottom:1.2rem}
+    .dx-report,.dx-report *{color:#000!important;border-color:#ccc!important}
+    .dx-accent,.dx-block-kicker,.dx-p-num,.dx-score-inline strong,.dx h3 span{color:#d14a00!important}
+    .dx-bars .dx-bar{background:#eee!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+    .dx-bars .dx-bar i{background:#ff5a00!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+    .dx-more{display:block}
+    .dx-more summary{border:0}
+    .dx-block{break-inside:avoid}
+    .dx-priorities li{break-inside:avoid}
+  }
+</style>
+
+<script is:inline define:vars={{ areas, niveles, waBase: siteConfig.whatsappUrl.split('?')[0], whatsappUrl: siteConfig.whatsappUrl }}>
+  (() => {
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+    const r = (key) => $(`[data-r="${key}"]`);
+    const screens = ['intro', 'perfil', ...areas.map((_, i) => `area-${i}`), 'preview', 'full'];
+    const screenEl = (name) => name.startsWith('area-') ? $(`.dx-area[data-area="${name.slice(5)}"]`) : $(`#dx-${name}`);
+    const startedAt = Date.now();
+    let current = 'intro';
+    let resultado = null;
+
+    const setSteps = (name) => {
+      const stage = name === 'full' ? 3 : name === 'preview' ? 1 : name === 'intro' ? -1 : 0;
+      $$('.dx-steps li').forEach((li, i) => {
+        li.classList.toggle('is-done', name === 'full' ? i < 2 : i < stage);
+        li.classList.toggle('is-current', name === 'full' ? i === 2 || i === 3 : i === stage);
+        if (li.classList.contains('is-current')) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+      });
+    };
+
+    const go = (name, focus = true) => {
+      screens.forEach((s) => { screenEl(s).hidden = s !== name; });
+      current = name;
+      setSteps(name);
+      const el = screenEl(name);
+      if (focus) {
+        const top = $('.dx-body').getBoundingClientRect().top + window.scrollY - 20;
+        window.scrollTo({ top: name === 'intro' ? 0 : top, behavior: 'smooth' });
+        const h = $('h2', el) || el;
+        if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex', '-1');
+        setTimeout(() => h.focus({ preventScroll: true }), 350);
+      }
+    };
+
+    const validateRadios = (form) => {
+      const missing = $$('.check-item', form).filter((fs) => !$('input:checked', fs));
+      $$('.check-item', form).forEach((fs) => fs.classList.toggle('missing', missing.includes(fs)));
+      const err = $('.dx-error', form);
+      if (missing.length) {
+        err.textContent = missing.length === 1 ? 'Te falta 1 pregunta por responder. Está marcada en naranja.' : `Te faltan ${missing.length} preguntas por responder. Están marcadas en naranja.`;
+        err.hidden = false;
+        missing[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => $('input', missing[0]).focus({ preventScroll: true }), 400);
+        return false;
+      }
+      err.hidden = true;
+      return true;
+    };
+
+    document.addEventListener('change', (e) => {
+      const fs = e.target.closest('.dx .check-item');
+      if (fs) {
+        fs.classList.remove('missing');
+        const form = fs.closest('form');
+        if (form && !$('.check-item.missing', form)) $('.dx-error', form).hidden = true;
+      }
+    });
+
+    $$('[data-ir]').forEach((b) => b.addEventListener('click', () => go(b.dataset.ir)));
+    $$('[data-atras]').forEach((b) => b.addEventListener('click', () => {
+      const i = screens.indexOf(current);
+      go(screens[Math.max(0, i - 1)]);
+    }));
+
+    $('#dx-perfil').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateRadios(e.target)) go('area-0');
+    });
+    $$('.dx-area').forEach((form) => form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!validateRadios(form)) return;
+      const i = Number(form.dataset.area);
+      if (i < areas.length - 1) go(`area-${i + 1}`);
+      else { calcular(); mostrarPreview(); go('preview'); }
+    }));
+
+    const val = (name) => { const el = $(`input[name="${name}"]:checked`); return el ? el.value : null; };
+
+    function calcular() {
+      let wTot = 0, sTot = 0, noSabe = 0;
+      const brechas = [];
+      const porArea = areas.map((a) => {
+        let w = 0, s = 0;
+        a.preguntas.forEach((q) => {
+          const raw = val(q.id);
+          const v = raw === 'ns' ? 0 : Number(raw);
+          if (raw === 'ns') noSabe++;
+          w += q.peso; s += q.peso * v;
+          if (v < 1) brechas.push({ ...q, area: a.nombre, v, ns: raw === 'ns', impacto: q.peso * (1 - v) });
+        });
+        wTot += w; sTot += s;
+        return { id: a.id, nombre: a.nombre, pct: Math.round((s / w) * 100) };
+      });
+      const pct = Math.round((sTot / wTot) * 100);
+      const nivel = niveles.find((n) => pct >= n.min);
+      const areaPct = Object.fromEntries(porArea.map((a) => [a.nombre, a.pct]));
+      brechas.sort((x, y) => (y.impacto - x.impacto) || (areaPct[x.area] - areaPct[y.area]));
+      const debil = [...porArea].sort((x, y) => x.pct - y.pct)[0];
+      resultado = {
+        pct, nivel, porArea, debil, noSabe,
+        prioridades: brechas.slice(0, 3),
+        otras: brechas.slice(3),
+        perfil: { sector: val('sector'), tamano: val('tamano'), datos: val('datos') },
+      };
+    }
+
+    function mostrarPreview() {
+      const { pct, nivel, debil } = resultado;
+      r('pct').textContent = String(pct);
+      r('riesgo').textContent = `${nivel.riesgo} · ${nivel.nombre}`;
+      r('texto').textContent = nivel.texto;
+      r('debil').textContent = `${debil.nombre} (${debil.pct}%)`;
+      r('meter').style.width = '0';
+      requestAnimationFrame(() => setTimeout(() => { r('meter').style.width = `${pct}%`; }, 60));
+    }
+
+    function li(children, cls) { const el = document.createElement('li'); if (cls) el.className = cls; el.append(...children); return el; }
+    function tag(name, text, cls) { const el = document.createElement(name); if (text != null) el.textContent = text; if (cls) el.className = cls; return el; }
+
+    function mostrarReporte(contacto, aviso) {
+      const { pct, nivel, porArea, debil, prioridades, otras, noSabe, perfil } = resultado;
+      r('empresa').textContent = contacto.empresa;
+      r('riesgo2').textContent = nivel.riesgo;
+      const fecha = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+      r('meta').textContent = `${fecha} · ${perfil.sector} · ${perfil.tamano} · Preparado para ${contacto.nombre}, ${contacto.cargo}`;
+      r('pct2').textContent = String(pct);
+      const bars = r('barras'); bars.replaceChildren();
+      porArea.forEach((a) => {
+        const bar = tag('span', null, 'dx-bar'); const fill = tag('i'); fill.style.width = `${a.pct}%`; bar.append(fill);
+        bars.append(li([tag('span', a.nombre, 'dx-bar-name'), bar, tag('span', `${a.pct}%`, 'dx-bar-pct')], a.id === debil.id ? 'is-weak' : ''));
+      });
+      const ns = r('nosabe');
+      ns.hidden = noSabe === 0;
+      ns.textContent = noSabe === 1 ? 'Respondiste "No sé" en 1 pregunta; la contamos como brecha, porque no saberlo ya es un hallazgo.' : `Respondiste "No sé" en ${noSabe} preguntas; las contamos como brechas, porque no saberlo ya es un hallazgo.`;
+
+      const pr = r('prioridades'); pr.replaceChildren();
+      const plan = r('plan'); plan.replaceChildren();
+      if (!prioridades.length) {
+        pr.append(li([tag('strong', 'No detectamos brechas en tus respuestas.'), tag('p', 'El siguiente paso es validar con evidencia que las prácticas funcionan como esperas.')]));
+      }
+      prioridades.forEach((p, i) => {
+        const n = String(i + 1).padStart(2, '0');
+        const estado = p.ns ? 'No sabes si se cumple' : p.v === 0 ? 'No se cumple' : 'Se cumple parcialmente';
+        pr.append(li([tag('span', n, 'dx-p-num'), tag('span', p.area, 'dx-p-area'), tag('strong', p.texto.replace(/^¿|\?$/g, '')), tag('p', `${estado}. ${p.porque}`)]));
+        const body = tag('p', p.recomendacion); body.append(tag('small', `Referencia ISO/IEC 27001:2022: ${p.iso}`));
+        plan.append(li([tag('span', n), body]));
+      });
+      const otrasList = r('otras'); otrasList.replaceChildren();
+      otras.forEach((p) => { const item = li([tag('strong', p.area), document.createTextNode(p.recomendacion)]); otrasList.append(item); });
+      r('otras-n').textContent = String(otras.length);
+      r('otras-wrap').hidden = otras.length === 0;
+
+      const temas = prioridades.map((p) => p.area.toLowerCase());
+      let msg = `Hola CERO27, soy ${contacto.nombre} de ${contacto.empresa}. Hice el diagnóstico y mi resultado fue ${nivel.riesgo.toLowerCase()} (${pct}%).`;
+      if (temas.length) msg += ` Quiero conversar sobre mis prioridades en: ${[...new Set(temas)].join(', ')}.`;
+      r('wa').href = `${waBase}?text=${encodeURIComponent(msg)}`;
+
+      const a = r('aviso');
+      a.hidden = !aviso; a.textContent = aviso || '';
+      go('full');
+    }
+
+    const contactForm = $('#dx-contacto');
+    contactForm.addEventListener('input', (e) => { if (e.target.matches('input')) e.target.removeAttribute('aria-invalid'); });
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(contactForm);
+      const contacto = Object.fromEntries(['nombre', 'cargo', 'empresa', 'correo', 'telefono'].map((k) => [k, String(fd.get(k) || '').trim()]));
+      const err = $('.dx-error', contactForm);
+      const invalid = [];
+      ['nombre', 'cargo', 'empresa'].forEach((k) => { if (contacto[k].length < 2) invalid.push(k); });
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contacto.correo)) invalid.push('correo');
+      $$('input', contactForm).forEach((i) => i.removeAttribute('aria-invalid'));
+      invalid.forEach((k) => $(`[name="${k}"]`, contactForm).setAttribute('aria-invalid', 'true'));
+      const consent = $('[name="consentimiento"]', contactForm).checked;
+      if (invalid.length || !consent) {
+        err.textContent = invalid.length ? 'Revisa los campos marcados: nombre, cargo, empresa y un correo válido son necesarios.' : 'Para continuar, marca la autorización de tratamiento de datos.';
+        err.hidden = false;
+        (invalid.length ? $(`[name="${invalid[0]}"]`, contactForm) : $('[name="consentimiento"]', contactForm)).focus();
+        return;
+      }
+      err.hidden = true;
+      const btn = $('button[type="submit"]', contactForm);
+      btn.disabled = true; btn.firstChild.textContent = 'Enviando… ';
+      const payload = {
+        contacto,
+        perfil: resultado.perfil,
+        resultado: {
+          porcentaje: resultado.pct,
+          nivel: `${resultado.nivel.riesgo} · ${resultado.nivel.nombre}`,
+          areas: resultado.porArea.map((a) => ({ nombre: a.nombre, porcentaje: a.pct })),
+          prioridades: resultado.prioridades.map((p) => `${p.area}: ${p.recomendacion}`),
+          noSabe: resultado.noSabe,
+        },
+        consentimiento: true,
+        sitio_web: String(fd.get('sitio_web') || ''),
+        duracionSeg: Math.round((Date.now() - startedAt) / 1000),
+      };
+      let aviso = '';
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 12000);
+        const res = await fetch('/api/diagnostico', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal });
+        clearTimeout(t);
+        aviso = res.ok ? `Gracias, ${contacto.nombre.split(' ')[0]}. Recibimos tus datos y te contactaremos para revisar tu resultado.` : 'No pudimos registrar tus datos en este momento. Si quieres que te contactemos, escríbenos por WhatsApp con el botón al final del reporte.';
+      } catch {
+        aviso = 'No pudimos registrar tus datos en este momento. Si quieres que te contactemos, escríbenos por WhatsApp con el botón al final del reporte.';
+      }
+      btn.disabled = false; btn.firstChild.textContent = 'Ver mi reporte completo ';
+      mostrarReporte(contacto, aviso);
+    });
+
+    $('[data-imprimir]').addEventListener('click', () => window.print());
+    $('[data-reiniciar]').addEventListener('click', () => {
+      $$('.dx form').forEach((f) => f.reset());
+      $$('.dx .check-item').forEach((fs) => fs.classList.remove('missing'));
+      resultado = null;
+      go('intro');
+    });
+
+    setSteps('intro');
+  })();
+</script>
+</PageLayout>
