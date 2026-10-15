@@ -134,7 +134,7 @@ const opciones = [
           <label>Correo corporativo<input name="correo" type="email" autocomplete="email" maxlength="160" required /></label>
           <label>Celular o WhatsApp <small>(opcional)</small><input name="telefono" type="tel" autocomplete="tel" maxlength="40" /></label>
           <label class="dx-hp" aria-hidden="true">Sitio web<input name="sitio_web" tabindex="-1" autocomplete="off" /></label>
-          <label class="dx-consent"><input type="checkbox" name="consentimiento" required /> <span>Autorizo a CERO27 a tratar mis datos de contacto y el resumen de este diagnóstico para contactarme sobre mi resultado y sus servicios, conforme a la Ley 1581 de 2012 y la <a href="/politica-de-privacidad/" target="_blank" rel="noopener">política de privacidad</a>. Puedo consultar, actualizar o suprimir mis datos escribiendo a {siteConfig.email}.</span></label>
+          <label class="dx-consent"><input type="checkbox" name="consentimiento" required /> <span>Autorizo a CERO27 a tratar mis datos de contacto y el resumen de este diagnóstico para contactarme sobre mi resultado y sus servicios, conforme a la Ley 1581 de 2012 y la <a href={siteConfig.privacyPolicyUrl} target="_blank" rel="noopener">política de tratamiento de datos</a>. Puedo consultar, actualizar o suprimir mis datos escribiendo a {siteConfig.email}.</span></label>
           <p class="check-error dx-error" role="alert" hidden></p>
           <button class="button button-primary button-large" type="submit">Ver mi reporte completo <span>→</span></button>
           <p class="dx-small">Tus respuestas detalladas no se envían: solo nos llegan tus datos de contacto, el perfil de la empresa y el resumen del resultado.</p>

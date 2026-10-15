@@ -1,0 +1,5 @@
+# Mientras la política tenga datos pendientes (NIT, dirección, proveedor de correo), no se indexa.
+# Al publicar la versión completa: borrar este bloque.
+/documentos/politica-tratamiento-datos-cero27.pdf
+  X-Robots-Tag: noindex
+  Content-Disposition: inline; filename="Politica-tratamiento-datos-CERO27.pdf"

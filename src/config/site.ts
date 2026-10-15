@@ -4,6 +4,7 @@ export const siteConfig = {
   siteUrl: 'https://cero27.co',
   diagnosticUrl: '/diagnostico/',
   email: 'info@cero27.co',
+  privacyPolicyUrl: '/documentos/politica-tratamiento-datos-cero27.pdf',
   whatsappDisplay: '316 865 9331',
   whatsappUrl: 'https://wa.me/573168659331?text=Hola%20CERO27%2C%20quiero%20conversar%20sobre%20mi%20empresa',
   location: 'Medellín, Colombia',
